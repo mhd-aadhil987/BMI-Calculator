@@ -1,0 +1,158 @@
+// const height = document.getElementById("height");
+// const cm = document.getElementById("cm");
+// const foot = document.getElementById("foot");
+// const weight = document.getElementById("weight");
+// const sta = document.getElementById("sta");
+// const result = document.getElementById("result");
+// const advice = document.getElementById("advice");
+
+// let w;
+// let h;
+// let newhight;
+// let answer;
+
+// function calculate(){
+//     if(cm.checked){
+//         w = Number(weight.value)
+//         h = Number(height.value)
+//         newhight = h / 100;
+//         newhight = Number(newhight);
+//         answer = w / (newhight * newhight);
+//         if(answer < 18.5){
+//             sta.textContent = "Under Weight";
+//             result.textContent = answer.toFixed(1);
+//             advice.textContent = "Consider consultinga healthcare professonal for personalized advice. 😪"
+//         }
+//         else if(answer >= 18.5 && answer <= 24.9){
+//             sta.textContent = "Normal Weight";
+//             result.textContent = answer.toFixed(1);
+//             advice.textContent = "Maintain a balanced diet and ragular physical activity to stay within this range. 😎"
+//         }
+//         else if(answer >= 25 && answer <= 29.9){
+//             sta.textContent = "Over Weight";
+//             result.textContent = answer.toFixed(1);
+//             advice.textContent = "Increase physical activity to promote a healthier weight. 😐"
+//         }
+//         else if(answer >= 30 && answer <= 34.9){
+//             sta.textContent = "Obesity Class 1";
+//             result.textContent = answer.toFixed(1);
+//             advice.textContent = "Consulting a healthcare provider can provide tailored guidance. 😮"
+//         }
+//         else if(answer >= 35 && answer <= 39.9){
+//             sta.textContent = "Obesity Class 2";
+//             result.textContent = answer.toFixed(1);
+//             advice.textContent = "Focus on sustainable lifestyle changes and increase physical activities. 😯"
+//         }
+//         else{
+//             sta.textContent = "Obesity Class 2";
+//             result.textContent = answer.toFixed(1);
+//             advice.textContent = "It's crucial to work closely with health care providers to create a comprehensive weight loss strategy that may include medical intervention. 😲"
+//         }
+//     }
+
+//     else if(foot.checked){
+//         w = Number(weight.value)
+//         h = Number(height.value)
+//         newhight = h * 0.3048;
+//         newhight = Number(newhight);
+//         answer = w / (newhight * newhight);
+//         if(answer < 18.5){
+//             sta.textContent = "Under Weight";
+//             result.textContent = answer.toFixed(1);
+//             advice.textContent = "Consider consultinga healthcare professonal for personalized advice. 😪"
+//         }
+//         else if(answer >= 18.5 && answer <= 24.9){
+//             sta.textContent = "Normal Weight";
+//             result.textContent = answer.toFixed(1);
+//             advice.textContent = "Maintain a balanced diet and ragular physical activity to stay within this range. 😎"
+//         }
+//         else if(answer >= 25 && answer <= 29.9){
+//             sta.textContent = "Over Weight";
+//             result.textContent = answer.toFixed(1);
+//             advice.textContent = "Increase physical activity to promote a healthier weight. 😐"
+//         }
+//         else if(answer >= 30 && answer <= 34.9){
+//             sta.textContent = "Obesity Class 1";
+//             result.textContent = answer.toFixed(1);
+//             advice.textContent = "Consulting a healthcare provider can provide tailored guidance. 😮"
+//         }
+//         else if(answer >= 35 && answer <= 39.9){
+//             sta.textContent = "Obesity Class 2";
+//             result.textContent = answer.toFixed(1);
+//             advice.textContent = "Focus on sustainable lifestyle changes and increase physical activities. 😯"
+//         }
+//         else{
+//             sta.textContent = "Obesity Class 2";
+//             result.textContent = answer.toFixed(1);
+//             advice.textContent = "It's crucial to work closely with health care providers to create a comprehensive weight loss strategy that may include medical intervention. 😲"
+//         }
+//     }
+//     else{
+//         result.textContent = "Select a Unit!";
+//     }
+// }
+
+// --------------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------------
+
+
+const height = document.getElementById("height");
+const cm = document.getElementById("cm");
+const foot = document.getElementById("foot");
+const weight = document.getElementById("weight");
+const sta = document.getElementById("sta"); // Fixed id
+const result = document.getElementById("result");
+const advice = document.getElementById("advice");
+
+let w;
+let h;
+let newHeight;
+let answer;
+
+function calculateBMI(w, h) {
+    return w / (h * h);
+}
+
+function displayResult(answer) {
+    if (answer < 18.5) {
+        sta.textContent = "Under Weight";
+        sta.style.color = "yellow"
+        advice.textContent = "Consider consulting a healthcare professional for personalized advice. 😪";
+    } else if (answer >= 18.5 && answer <= 25) {
+        sta.textContent = "Normal Weight";
+        sta.style.color = "Green"
+        advice.textContent = "Maintain a balanced diet and regular physical activity to stay within this range. 😎";
+    } else {
+        sta.textContent = "Over Weight";
+        sta.style.color = "Red"
+        advice.textContent = "Increase physical activity to promote a healthier weight. 😐";
+    } 
+    result.textContent = answer.toFixed(1);
+}
+
+function calculate() {
+    w = Number(weight.value);
+    h = Number(height.value);
+
+    if (isNaN(w) || isNaN(h) || w <= 0 || h <= 0) {
+        result.textContent = "Invalid input!";
+        sta.textContent = "";
+        advice.textContent = "";
+        return;
+    }
+
+    if (cm.checked) {
+        newHeight = h / 100; // Convert cm to meters
+    } else if (foot.checked) {
+        newHeight = h * 0.3048; // Convert feet to meters
+    } else {
+        result.textContent = "Select a Unit!";
+        sta.textContent = "";
+        advice.textContent = "";
+        return;
+    }
+
+    answer = calculateBMI(w, newHeight);
+    displayResult(answer);
+}
